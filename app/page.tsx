@@ -138,7 +138,7 @@ const DEMO_OUTPUT = [
   "ai-credit (main) npx ai-credit",
   "╭──────────────────────────────────────────────────╮",
   "│ AI Contribution Analysis                         │",
-  "│ Repository: /Users/eric/Developer/ai-contrib     │",
+  "│ Repository: /Users/eric/Developer/ai-credit      │",
   "│ Scan time: 2/2/2026, 4:22:53 PM                  │",
   "╰──────────────────────────────────────────────────╯",
   " 📊 Overview",
@@ -236,10 +236,10 @@ const TypewriterEffect = () => {
     if (line === "<<<DISTRIBUTION_BAR>>>") {
       return (
         <div key={i} className="h-4 w-full max-w-[500px] flex rounded-sm overflow-hidden my-2 ring-1 ring-white/10">
-          <div className="h-full bg-[#fef08a] w-[16%]" />
-          <div className="h-full bg-[#3b82f6] w-[10.4%]" />
-          <div className="h-full bg-[#f97316] w-[9.5%]" />
-          <div className="h-full bg-[#10b981] w-[7.8%]" />
+          <div className="h-full bg-[#fef08a] w-[15.3%]" />
+          <div className="h-full bg-[#10b981] w-[13.2%]" />
+          <div className="h-full bg-[#3b82f6] w-[9.8%]" />
+          <div className="h-full bg-[#f97316] w-[9.2%]" />
           <div className="h-full bg-white/20 flex-1" />
         </div>
       );
@@ -282,7 +282,7 @@ const TypewriterEffect = () => {
         else if (toolName.includes("Codex")) dotColor = "text-[#10b981]";
         
         return (
-          <div key={i} className="text-gray-400 whitespace-pre py-0">
+          <div key={i} className="text-gray-400 whitespace-pre py-1">
             {"  "}<span className={dotColor}>●</span>{" "}{toolName.padEnd(15)}{rest}
           </div>
         );
