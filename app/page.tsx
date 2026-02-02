@@ -1,9 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Terminal, BarChart3, ShieldCheck, Clock, FileCode, Cpu, Copy, Check } from "lucide-react";
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion"
+import { BarChart3, Check, Clock, Copy, Cpu, FileCode, ShieldCheck, Terminal } from "lucide-react"
+import React, { useEffect, useState } from "react"
 
 export default function Home() {
   return (
@@ -23,13 +22,11 @@ function Navbar() {
   return (
     <nav className="w-full max-w-6xl mx-auto flex items-center justify-between p-6 z-50">
       <div className="flex items-center gap-2 font-mono text-xl font-bold tracking-tighter">
-        <div className="w-4 h-4 bg-primary rounded-sm shadow-[0_0_10px_rgba(74,222,128,0.5)]" />
+        <span className="text-2xl">🤖</span>
         ai-credit
       </div>
       <div className="flex gap-6 text-sm font-medium text-muted-foreground">
-        <a href="#features" className="hover:text-primary transition-colors">Features</a>
-        <a href="#tools" className="hover:text-primary transition-colors">Tools</a>
-        <a href="https://github.com" className="hover:text-primary transition-colors">GitHub</a>
+        <a target="_blank" href="https://github.com/debugtheworldbot/ai-credit" className="hover:text-primary transition-colors">GitHub</a>
       </div>
     </nav>
   );
@@ -45,25 +42,12 @@ function HeroSection() {
   };
 
   return (
-    <section className="relative flex flex-col items-center justify-center pt-20 pb-32 text-center max-w-4xl mx-auto px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="inline-flex items-center gap-2 px-3 py-1 mb-8 text-xs font-medium rounded-full bg-secondary/50 border border-border text-primary font-mono"
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-        </span>
-        v1.0.0 Available Now
-      </motion.div>
-
+    <section className="relative flex flex-col items-center justify-center pt-12 pb-16 text-center max-w-4xl mx-auto px-4">
       <motion.h1 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60"
+        className="text-4xl md:text-6xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60"
       >
         Quantify <span className="text-primary text-glow">AI Impact</span><br />
         in Your Codebase
@@ -73,9 +57,9 @@ function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
+        className="text-base md:text-lg text-muted-foreground max-w-2xl mb-8 leading-relaxed"
       >
-        Track, analyze, and report on contributions from Claude, Gemini, Codex, and Aider.
+        Track, analyze, and report on contributions from Claude, Gemini, Codex, and Opencode — with absolute local security. 
         See exactly how much code your AI assistants are actually writing.
       </motion.p>
 
@@ -83,17 +67,41 @@ function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="flex items-center gap-4"
+        className="flex flex-col items-center gap-4"
       >
-        <div className="relative group">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-lg blur opacity-30 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
-          <button 
-            onClick={copyCommand}
-            className="relative flex items-center gap-4 px-8 py-4 bg-background border border-border rounded-lg font-mono text-lg hover:bg-secondary/50 transition-all active:scale-[0.98]"
-          >
-            <span className="text-primary">$</span> npx ai-credit
-            {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5 text-muted-foreground" />}
-          </button>
+        <div className="group relative">
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500" />
+          <div className="relative flex items-center gap-0 p-1.5 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md overflow-hidden">
+            <div className="flex items-center gap-3 px-4 py-2 font-mono text-base md:text-lg">
+              <Terminal className="w-5 h-5 text-primary/60" />
+              <span className="text-zinc-100">npx ai-credit</span>
+            </div>
+            
+            <div className="w-[1px] h-8 bg-white/10 mx-2" />
+            
+            <button 
+              onClick={copyCommand}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 relative overflow-hidden active:scale-95 ${
+                copied 
+                  ? "bg-primary/20 text-primary" 
+                  : "bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-zinc-100"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4 stroke-[3] animate-in zoom-in duration-300" />
+                    <span className="text-xs font-bold uppercase tracking-wider animate-in fade-in slide-in-from-right-2 duration-300">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4 transition-transform group-hover:scale-110" />
+                    <span className="text-xs font-bold uppercase tracking-wider">Copy</span>
+                  </>
+                )}
+              </div>
+            </button>
+          </div>
         </div>
       </motion.div>
     </section>
@@ -102,11 +110,11 @@ function HeroSection() {
 
 function TerminalDemoSection() {
   return (
-    <section className="w-full max-w-5xl mx-auto px-4 mb-32">
+    <section className="w-full max-w-5xl mx-auto px-4 mb-20">
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7 }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
         viewport={{ once: true }}
         className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-primary/10 bg-[#0c0c0c]"
       >
@@ -116,67 +124,253 @@ function TerminalDemoSection() {
           <div className="w-3 h-3 rounded-full bg-green-500/80" />
           <div className="ml-2 text-xs text-muted-foreground font-mono">ai-credit — analysis</div>
         </div>
-        <div className="p-6 font-mono text-sm md:text-base overflow-x-auto min-h-[400px]">
+        <div className="p-6 font-mono text-sm md:text-base overflow-x-auto min-h-[400px] relative z-10">
            <TypewriterEffect />
         </div>
-        {/* Scanline overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-20" />
+        {/* Simplified Scanline overlay (horizontal only) */}
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] opacity-20 z-20" />
       </motion.div>
     </section>
   );
 }
 
-const TypewriterEffect = () => {
-  const [lines, setLines] = useState<string[]>([]);
-  
-  const output = [
-    "> npx ai-credit .",
-    "🔍 Detecting AI tools...",
-    "✅ Found Claude Code projects",
-    "✅ Found Gemini CLI sessions",
-    "Analyzing 142 files...",
-    "----------------------------------------",
-    "📊 Overview:",
-    "  Total Files: 142",
-    "  Total Lines: 12,450",
-    "  AI Contributed: 3,735 (30.0%)",
-    "",
-    "🤖 By Tool:",
-    "  Claude Code: 2,500 lines (67%)",
-    "  Gemini CLI:  1,235 lines (33%)",
-    "",
-    "Done in 0.4s."
-  ];
+const DEMO_OUTPUT = [
+  "ai-credit (main) npx ai-credit",
+  "╭──────────────────────────────────────────────────╮",
+  "│ AI Contribution Analysis                         │",
+  "│ Repository: /Users/eric/Developer/ai-contrib     │",
+  "│ Scan time: 2/2/2026, 4:22:53 PM                  │",
+  "╰──────────────────────────────────────────────────╯",
+  " 📊 Overview",
+  "┌─────────────┬───────┬─────────────────┐",
+  "│ Metric      │ Value │ AI Contribution │",
+  "├─────────────┼───────┼─────────────────┤",
+  "│ Total Files │ 18    │ 15 (83.3%)      │",
+  "├─────────────┼───────┼─────────────────┤",
+  "│ Total Lines │ 3394  │ 1481 (43.6%)    │",
+  "├─────────────┼───────┼─────────────────┤",
+  "│ AI Sessions │ 9     │ -               │",
+  "└─────────────┴───────┴─────────────────┘",
+  " 🤖 Contribution by AI Tool",
+  "┌───────────────────────────────┬──────────┬───────┬─────────────┬───────────────┬──────────────────┐",
+  "│ Tool / Model                  │ Sessions │ Files │ Lines Added │ Lines Removed │ Share            │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│ Opencode                      │ 2        │ 24    │ +570        │ -131          │ 36.6%            │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│   └─ kimi-k2.5-free           │ 2        │ 24    │ +570        │ -131          │ 100.0% (of tool) │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│ Gemini CLI                    │ 5        │ 27    │ +371        │ -320          │ 23.8%            │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│   └─ gemini-3-pro-preview     │ 1        │ 8     │ +344        │ -251          │ 92.7% (of tool)  │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│   └─ gemini-2.5-pro           │ 3        │ 12    │ +27         │ -49           │ 7.3% (of tool)   │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│   └─ gemini-3-flash-preview   │ 1        │ 10    │ +0          │ -20           │ 0.0% (of tool)   │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│ Claude Code                   │ 1        │ 6     │ +338        │ -488          │ 21.7%            │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│   └─ claude-opus-4-5-20251101 │ 1        │ 6     │ +338        │ -488          │ 100.0% (of tool) │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│ Codex CLI                     │ 1        │ 12    │ +277        │ -171          │ 17.8%            │",
+  "├───────────────────────────────┼──────────┼───────┼─────────────┼───────────────┼──────────────────┤",
+  "│   └─ gpt-5.2-codex            │ 1        │ 12    │ +296        │ -176          │ 100.0% (of tool) │",
+  "└───────────────────────────────┴──────────┴───────┴─────────────┴───────────────┴──────────────────┘",
+  "",
+  "📈 Contribution Distribution",
+  "",
+  "<<<DISTRIBUTION_BAR>>>",
+  "",
+  "  ● Opencode        16.0%  (543 lines)",
+  "  ● Gemini CLI      10.4%  (353 lines)",
+  "  ● Claude Code      9.5%  (322 lines)",
+  "  ● Codex CLI        7.8%  (264 lines)",
+  "  ● Unknown/Human   56.3%  (1913 lines)"
+];
 
+const TypewriterEffect = () => {
+  const [lines, setLines] = useState<string[]>(["ai-credit (main)"]);
+  
   useEffect(() => {
-    let currentLine = 0;
-    const interval = setInterval(() => {
-      if (currentLine < output.length) {
-        setLines(prev => [...prev, output[currentLine]]);
-        currentLine++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 300);
-    return () => clearInterval(interval);
+    let outputTimer: ReturnType<typeof setTimeout>;
+    let interval: ReturnType<typeof setInterval>;
+
+    // 1. Wait 500ms then 'input' the command and show loading state
+    const inputTimer = setTimeout(() => {
+      setLines([DEMO_OUTPUT[0], "Analyzing repository..."]);
+
+      // 2. Wait 3s after command before showing output
+      outputTimer = setTimeout(() => {
+        // Remove "Analyzing..." line and start streaming from index 1
+        setLines([DEMO_OUTPUT[0]]); 
+        
+        let currentLine = 1;
+        interval = setInterval(() => {
+          if (currentLine < DEMO_OUTPUT.length) {
+            const nextLine = DEMO_OUTPUT[currentLine];
+            setLines(prev => [...prev, nextLine]);
+            currentLine++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 25);
+      }, 3000);
+    }, 500);
+
+    return () => {
+      clearTimeout(inputTimer);
+      clearTimeout(outputTimer);
+      clearInterval(interval);
+    };
   }, []);
 
-  return (
-    <div className="space-y-1">
-      {lines.map((line, i) => (
-        <div key={i} className={cn(
-          "break-words",
-          line.startsWith(">") ? "text-primary font-bold" : 
-          line.startsWith("✅") ? "text-green-400" : 
-          line.includes("Overview") || line.includes("By Tool") ? "text-accent font-bold mt-4" : "text-gray-300"
-        )}>
+  const renderLine = (line: string, i: number) => {
+    // 0. Analyzing Status
+    if (line === "Analyzing repository...") {
+      return (
+        <div key={i} className="animate-rainbow font-bold pb-2">
           {line}
         </div>
-      ))}
-      <div className="w-2 h-5 bg-primary animate-cursor inline-block align-middle ml-1" />
+      );
+    }
+
+    // 1. Distribution Bar
+    if (line === "<<<DISTRIBUTION_BAR>>>") {
+      return (
+        <div key={i} className="h-4 w-full max-w-[500px] flex rounded-sm overflow-hidden my-2 ring-1 ring-white/10">
+          <div className="h-full bg-[#fef08a] w-[16%]" />
+          <div className="h-full bg-[#3b82f6] w-[10.4%]" />
+          <div className="h-full bg-[#f97316] w-[9.5%]" />
+          <div className="h-full bg-[#10b981] w-[7.8%]" />
+          <div className="h-full bg-white/20 flex-1" />
+        </div>
+      );
+    }
+
+    // 2. Prompt Line
+    if (line.startsWith("ai-credit (main)")) {
+      const showCommand = line.includes("npx ai-credit");
+      return (
+        <div key={i} className="text-foreground pb-2">
+          <span className="text-red-400 font-bold">ai-credit</span>{" "}
+          <span className="text-cyan-400 font-bold">(main)</span>{" "}
+          {showCommand && (
+            <span className="text-white">
+              <span className="text-yellow-400">npx</span> ai-credit
+            </span>
+          )}
+        </div>
+      );
+    }
+
+    // 3. Headers
+    if (line.includes("📊 Overview") || line.includes("🤖 Contribution by AI Tool") || line.includes("📈 Contribution Distribution")) {
+      return (
+        <div key={i} className="text-white font-bold mt-4 mb-2 whitespace-pre antialiased">
+          {line}
+        </div>
+      );
+    }
+
+    // 4. Legend Dots
+    if (line.trim().startsWith("●")) {
+      const match = line.match(/●\s+(.*?)\s+(\d.*)/);
+      if (match) {
+        const [, toolName, rest] = match;
+        let dotColor = "text-gray-500";
+        if (toolName.includes("Opencode")) dotColor = "text-[#fef08a]";
+        else if (toolName.includes("Gemini")) dotColor = "text-[#3b82f6]";
+        else if (toolName.includes("Claude")) dotColor = "text-[#f97316]";
+        else if (toolName.includes("Codex")) dotColor = "text-[#10b981]";
+        
+        return (
+          <div key={i} className="text-gray-400 whitespace-pre py-0">
+            {"  "}<span className={dotColor}>●</span>{" "}{toolName.padEnd(15)}{rest}
+          </div>
+        );
+      }
+    }
+
+    // 5. Table Rows & Borders
+    // "(of tool)" rows should be fully gray
+    if (line.includes("(of tool)")) {
+      return (
+        <div
+          key={i}
+          className="text-gray-500 whitespace-pre overflow-visible tabular-nums"
+          style={{
+            fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+            fontVariantLigatures: "none"
+          }}
+        >
+          {line}
+        </div>
+      );
+    }
+
+    // Process the line for highlighting
+    let processedLine = line
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    // Highlight Tool Names (Cyan)
+    processedLine = processedLine.replace(
+        /(Opencode|Gemini CLI|Claude Code|Codex CLI)/g, 
+        '<span class="text-cyan-400">$1</span>'
+    );
+    
+    // Highlight Numbers (+ Green, - Red)
+    // Matches " +123 " or "│ +123 "
+    processedLine = processedLine.replace(
+        /([ │])(\+\d+)([ │])/g, 
+        '$1<span class="text-green-400">$2</span>$3'
+    );
+    processedLine = processedLine.replace(
+        /([ │])(-\d+)([ │])/g, 
+        '$1<span class="text-red-400">$2</span>$3'
+    );
+
+    // Dim "(of tool)" to keep it subtle
+    processedLine = processedLine.replace(
+        /\(of tool\)/g,
+        '<span class="text-gray-500">(of tool)</span>'
+    );
+
+    // Highlight Headers (White only to preserve mono width)
+    if (line.includes("Metric") || line.includes("Value") || line.includes("Tool / Model") || line.includes("Sessions")) {
+       processedLine = processedLine.replace(
+           /(Metric|Value|AI Contribution|Tool \/ Model|Sessions|Files|Lines Added|Lines Removed|Share)/g,
+           '<span class="text-white">$1</span>'
+       );
+    }
+    
+    // Dim Borders
+    processedLine = processedLine.replace(
+        /([│┌┐└┘├┤┬┴┼─])/g, 
+        '<span class="text-white/20">$1</span>'
+    );
+
+    return (
+        <div 
+            key={i} 
+            className="text-gray-400 whitespace-pre overflow-visible tabular-nums"
+            style={{ 
+              fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+              fontVariantLigatures: "none"
+            }}
+            dangerouslySetInnerHTML={{ __html: processedLine }} 
+        />
+    );
+  };
+
+  return (
+    <div className="space-y-0 text-xs md:text-sm leading-none tracking-normal overflow-x-auto">
+      {lines.map((line, i) => renderLine(line, i))}
+      <div className="w-2 h-4 bg-primary animate-cursor inline-block align-middle ml-1" />
     </div>
   );
 };
+
 
 function StatsPreviewSection() {
   return (
@@ -192,12 +386,12 @@ function StatsPreviewSection() {
           icon={<Cpu className="w-6 h-6 text-accent" />}
           label="Tools Supported"
           value="4+"
-          desc="Claude, Codex, Gemini, Aider"
+          desc="Claude, Codex, Gemini, Opencode"
         />
         <StatCard 
           icon={<Clock className="w-6 h-6 text-blue-400" />}
           label="Analysis Speed"
-          value="<1s"
+          value="<5s"
           desc="Multithreaded architecture"
         />
       </div>
@@ -205,7 +399,7 @@ function StatsPreviewSection() {
   );
 }
 
-function StatCard({ icon, label, value, desc }: { icon: any, label: string, value: string, desc: string }) {
+function StatCard({ icon, label, value, desc }: { icon: React.ReactNode, label: string, value: string, desc: string }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -224,9 +418,14 @@ function StatCard({ icon, label, value, desc }: { icon: any, label: string, valu
 function FeaturesSection() {
   const features = [
     {
+      title: "100% Secure & Private",
+      desc: "Fully open-source. Your code never leaves your machine. No telemetry, no cloud processing.",
+      icon: ShieldCheck
+    },
+    {
       title: "Verified Existence",
       desc: "We verify every line against the current codebase. Deleted or rewritten code is excluded.",
-      icon: ShieldCheck
+      icon: FileCode
     },
     {
       title: "Visual Reports",
@@ -249,7 +448,7 @@ function FeaturesSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((f, i) => (
           <motion.div
             key={i}
@@ -262,7 +461,7 @@ function FeaturesSection() {
             <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <f.icon className="w-10 h-10 text-primary mb-6" />
             <h3 className="text-xl font-bold mb-3">{f.title}</h3>
-            <p className="text-muted-foreground leading-relaxed">{f.desc}</p>
+            <p className="text-muted-foreground leading-relaxed text-sm">{f.desc}</p>
           </motion.div>
         ))}
       </div>
@@ -271,7 +470,7 @@ function FeaturesSection() {
 }
 
 function SupportedToolsSection() {
-  const tools = ["Claude Code", "Gemini CLI", "Codex CLI", "Aider"];
+  const tools = ["Claude Code", "Gemini CLI", "Codex CLI", "Opencode"];
   
   return (
     <section id="tools" className="py-20 border-t border-white/5 bg-black/20">
