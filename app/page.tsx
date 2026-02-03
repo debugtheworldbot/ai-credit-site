@@ -315,7 +315,7 @@ const TypewriterEffect = () => {
 
     // Highlight Tool Names (Cyan)
     processedLine = processedLine.replace(
-        /(Opencode|Gemini CLI|Claude Code|Codex CLI)/g, 
+        /(Opencode|Gemini CLI|Claude Code|Codex CLI|Cursor)/g, 
         '<span class="text-cyan-400">$1</span>'
     );
     
@@ -385,8 +385,8 @@ function StatsPreviewSection() {
         <StatCard 
           icon={<Cpu className="w-6 h-6 text-accent" />}
           label="Tools Supported"
-          value="4+"
-          desc="Claude, Codex, Gemini, Opencode"
+          value="5"
+          desc="Claude, Codex, Cursor, Gemini, Opencode"
         />
         <StatCard 
           icon={<Clock className="w-6 h-6 text-blue-400" />}
@@ -479,6 +479,7 @@ function HowItWorksSection() {
       paths: [
         { tool: "Claude Code", path: "~/.claude/projects/", format: "JSONL" },
         { tool: "Codex CLI", path: "~/.codex/sessions/", format: "JSONL" },
+        { tool: "Cursor", path: "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb", format: "JSON" },
         { tool: "Gemini CLI", path: "~/.gemini/", format: "JSON" },
         { tool: "Opencode", path: "session logs", format: "JSONL" },
       ],
@@ -629,7 +630,7 @@ function HowItWorksSection() {
 }
 
 function SupportedToolsSection() {
-  const tools = ["Claude Code", "Gemini CLI", "Codex CLI", "Opencode"];
+  const tools = ["Claude Code", "Codex CLI", "Cursor", "Gemini CLI", "Opencode"];
   
   return (
     <section id="tools" className="py-20 border-t border-white/5 bg-black/20">
