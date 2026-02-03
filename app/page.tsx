@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion"
-import { BarChart3, Check, Clock, Copy, Cpu, FileCode, ShieldCheck, Terminal } from "lucide-react"
+import { ArrowRight, BarChart3, Check, CheckCircle2, Clock, Code2, Copy, Cpu, FileCode, FolderSearch, ShieldCheck, Terminal } from "lucide-react"
 import React, { useEffect, useState } from "react"
 
 export default function Home() {
@@ -10,6 +10,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <TerminalDemoSection />
+      <HowItWorksSection />
       <StatsPreviewSection />
       <FeaturesSection />
       <SupportedToolsSection />
@@ -464,6 +465,165 @@ function FeaturesSection() {
           </motion.div>
         ))}
       </div>
+    </section>
+  );
+}
+
+function HowItWorksSection() {
+  const steps = [
+    {
+      num: "01",
+      icon: FolderSearch,
+      title: "Scan Session Logs",
+      desc: "Each AI tool stores session data in its own format. ai-credit knows where to look and how to parse each one.",
+      paths: [
+        { tool: "Claude Code", path: "~/.claude/projects/", format: "JSONL" },
+        { tool: "Codex CLI", path: "~/.codex/sessions/", format: "JSONL" },
+        { tool: "Gemini CLI", path: "~/.gemini/", format: "JSON" },
+        { tool: "Opencode", path: "session logs", format: "JSONL" },
+      ],
+    },
+    {
+      num: "02",
+      icon: Code2,
+      title: "Extract File Operations",
+      desc: "Identifies assistant messages containing tool_use, tool_calls, and functionCall blocks, then extracts every file write and edit operation with full paths and content.",
+      codeLines: [
+        { comment: "// Parsed from assistant messages" },
+        { tool: "write", path: "src/index.ts" },
+        { tool: "edit", path: "lib/utils.ts" },
+      ],
+    },
+    {
+      num: "03",
+      icon: CheckCircle2,
+      title: "Verify Against Codebase",
+      desc: "Only lines that currently exist in the codebase with exactly the same content are counted. Deleted or rewritten code is excluded \u2014 ensuring statistics reflect actual, surviving contributions.",
+      highlight: true,
+    },
+  ];
+
+  return (
+    <section id="how-it-works" className="py-32 px-4 max-w-5xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-20"
+      >
+        <h2 className="text-3xl md:text-5xl font-bold mb-6">How it works.</h2>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          A multi-adapter parsing engine that reads local AI session logs, extracts file operations, and verifies every line against your <span className="text-primary">actual codebase</span>.
+        </p>
+      </motion.div>
+
+      <div className="relative">
+        {/* Vertical connecting line */}
+        <div className="absolute left-[27px] md:left-[31px] top-8 bottom-8 w-px bg-gradient-to-b from-primary/60 via-primary/20 to-transparent hidden md:block" />
+
+        <div className="flex flex-col gap-6 md:gap-4">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.num}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              className="relative flex gap-5 md:gap-8 items-start"
+            >
+              {/* Step number node */}
+              <div className="relative z-10 flex-shrink-0">
+                <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center font-mono text-sm font-bold border ${
+                  step.highlight
+                    ? "bg-primary/15 border-primary/40 text-primary"
+                    : "bg-white/5 border-white/10 text-muted-foreground"
+                }`}>
+                  {step.num}
+                </div>
+              </div>
+
+              {/* Step card */}
+              <div className={`flex-1 p-6 md:p-8 rounded-2xl border transition-all group hover:border-primary/20 ${
+                step.highlight
+                  ? "bg-gradient-to-br from-primary/5 via-transparent to-transparent border-primary/10"
+                  : "bg-white/[0.02] border-white/10"
+              }`}>
+                <div className="flex items-center gap-3 mb-3">
+                  <step.icon className={`w-5 h-5 ${step.highlight ? "text-primary" : "text-muted-foreground group-hover:text-primary transition-colors"}`} />
+                  <h3 className="text-lg md:text-xl font-bold">{step.title}</h3>
+                </div>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">{step.desc}</p>
+
+                {/* Tool paths for step 1 */}
+                {step.paths && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+                    {step.paths.map((p) => (
+                      <div key={p.tool} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/30 border border-white/5 font-mono text-xs">
+                        <span className="text-primary/70">{p.tool}</span>
+                        <span className="text-white/20">|</span>
+                        <span className="text-muted-foreground truncate">{p.path}</span>
+                        <span className="ml-auto text-[10px] uppercase tracking-wider text-white/20 flex-shrink-0">{p.format}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Code block for step 2 */}
+                {step.codeLines && (
+                  <div className="mt-4 px-4 py-3 rounded-lg bg-black/40 border border-white/5 font-mono text-xs leading-relaxed overflow-x-auto">
+                    {step.codeLines.map((line: { comment?: string; tool?: string; path?: string }, j: number) => (
+                      <div key={j}>
+                        {line.comment ? (
+                          <span className="text-white/20">{line.comment}</span>
+                        ) : (
+                          <>
+                            <span className="text-white/20">{"{ "}</span>
+                            <span className="text-cyan-400/70">&quot;tool&quot;</span>
+                            <span className="text-white/20">: </span>
+                            <span className="text-primary/80">&quot;{line.tool}&quot;</span>
+                            <span className="text-white/20">, </span>
+                            <span className="text-cyan-400/70">&quot;path&quot;</span>
+                            <span className="text-white/20">: </span>
+                            <span className="text-amber-400/70">&quot;{line.path}&quot;</span>
+                            <span className="text-white/20">{" }"}</span>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Verification badge for step 3 */}
+                {step.highlight && (
+                  <div className="mt-4 flex items-center gap-2 text-xs text-primary/80 font-mono">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Only surviving code is counted as AI contribution</span>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Learn more link */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5 }}
+        className="mt-12 text-center"
+      >
+        <a
+          href="https://github.com/debugtheworldbot/ai-credit?tab=readme-ov-file#how-it-works-the-json-parsing-logic"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+        >
+          Read the full technical breakdown on GitHub
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </a>
+      </motion.div>
     </section>
   );
 }
